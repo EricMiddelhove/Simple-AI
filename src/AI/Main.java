@@ -49,6 +49,7 @@ public class Main {
 				
 				Color col = new Color(picture.getRGBOf(y,x));
 				c = n.evaluate(col);
+				
 				/**
 				 * 
 				 * m = y2 - y1 / x2 -x1
