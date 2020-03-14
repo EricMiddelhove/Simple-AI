@@ -9,6 +9,8 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
+ * license = CC-BY-SA-NC
+ * http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 public class Main {
 
@@ -19,7 +21,7 @@ public class Main {
 	static Picture notRed = new Picture("src/Training Data/NOTRED.jpg");
 
 	//analyzing data
-	static Picture picture = new Picture("src/Source img Data/mon3.jpeg");
+	static Picture picture = new Picture("src/Source img Data/th-4.jpeg");
 	
 	//Output data | Array same size as Picture in px
 	static boolean [][] picInBool = new boolean[picture.getDimensions()[0] + 1][picture.getDimensions()[1] + 1]; 
@@ -67,6 +69,8 @@ public class Main {
 						newPic.setPixel(y, x, 0, 0, 255);
 					}else if(c == Perceptron.Color.YELLOW) {
 						newPic.setPixel(y, x, 255, 255, 0);
+					}else if(c == Perceptron.Color.WHITE) {
+						newPic.setPixel(y, x, 255, 255, 255);
 					}else {
 						newPic.setPixel(y, x, 0, 0, 0);
 					}
