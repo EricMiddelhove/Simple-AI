@@ -4,6 +4,8 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
+ * license = CC-BY-SA-NC
+ * http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 public class Perceptron {
 	public double[] inputs;
@@ -11,13 +13,8 @@ public class Perceptron {
 
 	public static double LEARNING_RATE = 0.2;
 
-	public static String RED = "red";
-	public static String GREEN = "green";
-	public static String BLUE = "blue";
-	public static String YELLOW = "yellow";
-
 	public static enum Color {
-		RED, GREEN, BLUE, YELLOW
+		RED, GREEN, BLUE, YELLOW, WHITE
 	};
 
 	/**
@@ -182,6 +179,8 @@ public class Perceptron {
 				inputs = new double[] { 0, 255, 0, 1 };
 			} else if (red2 == Color.BLUE) {
 				inputs = new double[] { 0, 0, 255, 1 };
+			} else if (red2 == Color.WHITE) {
+				inputs = new double[] { 255, 255, 255, 1 };
 			} else if (red2 == Color.YELLOW) {
 				inputs = new double[] { 255, 255, 0, 1 };
 			} else {
@@ -278,3 +277,4 @@ public class Perceptron {
 	}
 
 }
+
