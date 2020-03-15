@@ -9,7 +9,7 @@ import PicSerialsization.Picture;
 public class Perceptron {
 	
 	public double[] inputs;
-	public double[] weights;
+	public Weights weights;
 	
 	public static double LEARNING_RATE = 0.2;
 	
@@ -23,8 +23,8 @@ public class Perceptron {
 	 * @param w2 weight green
 	 * @param w3 weight blue
 	 */
-	public Perceptron(double w1, double w2, double w3) {
-		weights = new double[] {w1, w2, w3};
+	public Perceptron(Weights weights) {
+		this.weights = weights;
 	}
 	
 	/**
@@ -69,9 +69,9 @@ public class Perceptron {
 		// Initialize weight if neccessary
 		if(weights == null) {
 			
-			weights = new double[inputs.length];
+			weights = new Weights(new double[inputs.length]);
 			
-			for(int i = 0; i < weights.length; i++) {
+			for(int i = 0; i < weights.length(); i++) {
 				
 				double rand = Math.random() * 10;
 				double sign = (((int) (Math.random() * 10) % 2) == 0) ? -1 : 1;
@@ -82,13 +82,13 @@ public class Perceptron {
 					System.out.println("realRand " + i + " : " + realRand);
 				}
 				
-				weights[i] = (float) realRand;
+				weights.setWeight(i, (float) realRand);
 			}
 			
 		}
 		
 		// check if input amount is correct
-		if(inputs.length != weights.length) {
+		if(inputs.length != weights.length()) {
 			System.out.println("input array has wrong size");
 			return 0;
 		}
@@ -97,7 +97,7 @@ public class Perceptron {
 		// Sum inputs and weights
 		for(int i = 0; i < inputs.length; i++) {
 			
-			sum += (inputs[i] * weights[i]);
+			sum += (inputs[i] * weights.getWeight(i));
 			
 		}
 		
@@ -130,9 +130,9 @@ public class Perceptron {
 		// Initialize weight if neccessary
 		if(weights == null) {
 			
-			weights = new double[inputs.length];
+			weights = new Weights(new double[inputs.length]);
 			
-			for(int i = 0; i < weights.length; i++) {
+			for(int i = 0; i < weights.length(); i++) {
 				
 				double rand = Math.random() * 10;
 				double sign = (((int) (Math.random() * 10) % 2) == 0) ? -1 : 1;
@@ -143,13 +143,13 @@ public class Perceptron {
 					System.out.println("realRand " + i + " : " + realRand);
 				}
 				
-				weights[i] = (float) realRand;
+				weights.setWeight(i, (float) realRand);
 			}
 			
 		}
 		
 		// check if input amount is correct
-		if(inputs.length != weights.length) {
+		if(inputs.length != weights.length()) {
 			System.out.println("input array has wrong size");
 			return 0;
 		}
@@ -158,7 +158,7 @@ public class Perceptron {
 		// Sum inputs and weights
 		for(int i = 0; i < inputs.length; i++) {
 			
-			sum += (inputs[i] * weights[i]);
+			sum += (inputs[i] * weights.getWeight(i));
 			
 		}
 		// } End sum up mechanism
@@ -187,7 +187,7 @@ public class Perceptron {
 			// Guessing for 100% value
 			float ground = 0;
 			for(int i = 0; i < inputs.length; i++) {
-				ground += inputs[i] * weights[i];
+				ground += inputs[i] * weights.getWeight(i);
 			}
 			
 			// percentage p = w * 100 / g
@@ -211,10 +211,10 @@ public class Perceptron {
 		if(Main.verbose) {
 			System.out.println("Guess: 					" + guess);
 		}
-		for(int i = 0; i < weights.length; i++) {
-			weights[i] = weights[i] + (error * inputs[i] * LEARNING_RATE);
+		for(int i = 0; i < weights.length(); i++) {
+			weights.setWeight(i, weights.getWeight(i) + (error * inputs[i] * LEARNING_RATE));
 			if(Main.verbose) {
-				System.out.println("Input: " + inputs[i] + " | Weight " + i + " :" + weights[i] + " diff: "
+				System.out.println("Input: " + inputs[i] + " | Weight " + i + " :" + weights.getWeight(i) + " diff: "
 						+ (error * inputs[i] * LEARNING_RATE));
 			}
 		}

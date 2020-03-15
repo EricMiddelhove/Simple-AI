@@ -3,6 +3,13 @@
  */
 package AI;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import PicSerialsization.Color;
 
 /**
@@ -97,6 +104,73 @@ public class Network {
 		
 		// Returning color of biggest element
 		return guesses[0].color;
+	}
+	
+	private void ensureFolder(File folder) {
+		if(!folder.exists() || !folder.isDirectory()) {
+			folder.mkdirs();
+		}
+	}
+	
+	private File getWeightsaveFor(File folder, Perceptron p) {
+		// currently doesn't check if folder is a directory or not
+		return new File(folder, p.getClass().getSimpleName() + ".weightsave");
+	}
+	
+	/**
+	 * @param p perceptron to load
+	 * @return load succeeded
+	 */
+	private boolean _loadWeights(File folder, Perceptron p) {
+		File apropFile = getWeightsaveFor(folder, p);
+		if(apropFile.exists() && apropFile.isFile()) {
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(apropFile))) {
+				p.weights = (Weights) ois.readObject();
+				return true;
+			} catch(ClassNotFoundException e) {
+				// this shouldn't happen with the current implementation
+				e.printStackTrace();
+			} catch(IOException e) {
+				// oooh something happened
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * @return load succeeded
+	 */
+	public boolean loadWeights(File folder) {
+		boolean result = true;
+		ensureFolder(folder);
+		result &= _loadWeights(folder, blueP);
+		result &= _loadWeights(folder, greenP);
+		result &= _loadWeights(folder, redP);
+		result &= _loadWeights(folder, whiteP);
+		result &= _loadWeights(folder, yellowP);
+		
+		return result;
+	}
+	
+	private void _saveWeights(File folder, Perceptron p) {
+		// simple way saving the wheights
+		File apropFile = getWeightsaveFor(folder, p);
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(apropFile))) {
+			oos.writeObject(p.weights);
+		} catch(IOException e) {
+			// oooh something happened
+			e.printStackTrace();
+		}
+	}
+	
+	public void saveWeights(File folder) {
+		ensureFolder(folder);
+		_saveWeights(folder, blueP);
+		_saveWeights(folder, greenP);
+		_saveWeights(folder, redP);
+		_saveWeights(folder, whiteP);
+		_saveWeights(folder, yellowP);
 	}
 	
 	private class Status {

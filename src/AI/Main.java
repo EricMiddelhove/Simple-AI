@@ -13,6 +13,8 @@ import PicSerialsization.Picture;
 
 public class Main {
 	
+	private static final File folder = new File("weights");
+	
 	static Perceptron p = new Perceptron();
 	
 	// Training data
@@ -31,8 +33,13 @@ public class Main {
 	private static Perceptron per = new Perceptron();
 	
 	public static void main(String[] args) {
-		
 		Network n = new Network();
+		// simple
+		if(!n.loadWeights(folder)) {
+			System.err.println("Oh oh ...");
+			// halt execution because weights are uninitialized
+			// System.exit(1);
+		}
 		
 		Perceptron.Color c;
 		
@@ -85,6 +92,8 @@ public class Main {
 		}
 		newPic.saveImage();
 		
+		// simple
+		n.saveWeights(folder);
 	}
 	
 	/**
