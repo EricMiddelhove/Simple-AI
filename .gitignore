@@ -1,2 +1,5 @@
 # Ignore output
 bin
+
+# Ignore weights (put all your subfolders with perceptron saves in this folder)
+weights
