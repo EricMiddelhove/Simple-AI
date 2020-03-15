@@ -106,23 +106,40 @@ public class Network {
 		return guesses[0].color;
 	}
 	
+	/**
+	 * ensures that folder exists
+	 * @param folder
+	 */
 	private void ensureFolder(File folder) {
 		if(!folder.exists() || !folder.isDirectory()) {
 			folder.mkdirs();
 		}
 	}
 	
-	private File getWeightsaveFor(File folder, Perceptron p) {
+	/**
+	 * gets the weightsave file for a perceptron
+	 * @param folder parent folder
+	 * @param id     temporary whilst Perceptron has none
+	 * @param p      perceptron to get the file for
+	 * @return
+	 */
+	private File getWeightsaveFor(File folder, String id, Perceptron p) {
 		// currently doesn't check if folder is a directory or not
-		return new File(folder, p.getClass().getSimpleName() + ".weightsave");
+		return new File(folder, id + ".weightsave");
+		
+		// currently id gets passed in as an argument but it could be a field in Perceptron
+		// return new File(folder, p.getID() + ".weightsave");
 	}
 	
 	/**
-	 * @param p perceptron to load
+	 * loads the weights of a single perceptron
+	 * @param folder parent folder
+	 * @param id     temporary whilst Perceptron has none
+	 * @param p      perceptron to load
 	 * @return load succeeded
 	 */
-	private boolean _loadWeights(File folder, Perceptron p) {
-		File apropFile = getWeightsaveFor(folder, p);
+	private boolean _loadWeights(File folder, String id, Perceptron p) {
+		File apropFile = getWeightsaveFor(folder, id, p);
 		if(apropFile.exists() && apropFile.isFile()) {
 			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(apropFile))) {
 				p.weights = (Weights) ois.readObject();
@@ -139,23 +156,34 @@ public class Network {
 	}
 	
 	/**
+	 * currently just a wrapper method
+	 * @param folder load folder
 	 * @return load succeeded
 	 */
+	
 	public boolean loadWeights(File folder) {
 		boolean result = true;
 		ensureFolder(folder);
-		result &= _loadWeights(folder, blueP);
-		result &= _loadWeights(folder, greenP);
-		result &= _loadWeights(folder, redP);
-		result &= _loadWeights(folder, whiteP);
-		result &= _loadWeights(folder, yellowP);
+		
+		// usage of raw strings is unsafe -> use common constants ...
+		result &= _loadWeights(folder, "blueP", blueP);
+		result &= _loadWeights(folder, "greenP", greenP);
+		result &= _loadWeights(folder, "redP", redP);
+		result &= _loadWeights(folder, "whiteP", whiteP);
+		result &= _loadWeights(folder, "yellowP", yellowP);
 		
 		return result;
 	}
 	
-	private void _saveWeights(File folder, Perceptron p) {
+	/**
+	 * saves the weights of a signle perceptron
+	 * @param folder parent folder
+	 * @param id     temporary whilst Perceptron has none
+	 * @param p      perceptron to save
+	 */
+	private void _saveWeights(File folder, String id, Perceptron p) {
 		// simple way saving the wheights
-		File apropFile = getWeightsaveFor(folder, p);
+		File apropFile = getWeightsaveFor(folder, id, p);
 		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(apropFile))) {
 			oos.writeObject(p.weights);
 		} catch(IOException e) {
@@ -164,13 +192,19 @@ public class Network {
 		}
 	}
 	
+	/**
+	 * currently just a wrapper method
+	 * @param folder save folder
+	 */
 	public void saveWeights(File folder) {
 		ensureFolder(folder);
-		_saveWeights(folder, blueP);
-		_saveWeights(folder, greenP);
-		_saveWeights(folder, redP);
-		_saveWeights(folder, whiteP);
-		_saveWeights(folder, yellowP);
+		
+		// usage of raw strings is unsafe -> use common constants ...
+		_saveWeights(folder, "blueP", blueP);
+		_saveWeights(folder, "greenP", greenP);
+		_saveWeights(folder, "redP", redP);
+		_saveWeights(folder, "whiteP", whiteP);
+		_saveWeights(folder, "yellowP", yellowP);
 	}
 	
 	private class Status {
