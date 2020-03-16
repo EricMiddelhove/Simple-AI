@@ -9,8 +9,10 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
+ * 
+ * icense = CC-BY-SA-NC
+ * http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
-
 public class Main {
 	
 	private static final File folder = new File("weights");
@@ -36,7 +38,7 @@ public class Main {
 		Network n = new Network();
 		// simple
 		if(!n.loadWeights(folder)) {
-			System.err.println("Oh oh ...");
+			System.err.println("could not load weights because there is no data");
 			// halt execution because weights are uninitialized
 			// System.exit(1);
 		}
@@ -116,6 +118,11 @@ public class Main {
 		
 	}
 	
+	
+	/**
+	 * chages every red pixel to something else DEPRECATED DO NOT USE
+	 * 
+	 */
 	public static void changeColor() {
 		int[] dimensions = picture.getDimensions();
 		
@@ -152,6 +159,9 @@ public class Main {
 		
 	}
 	
+	/**
+	 * trains perceptron for red DEPRECATED! WILL Crash 
+	 */
 	public static void trainDemo() {
 		
 		System.out.println("\n\nTraining ...");

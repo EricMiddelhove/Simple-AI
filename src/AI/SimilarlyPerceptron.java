@@ -7,6 +7,8 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
+ * license = CC-BY-SA-NC
+ * http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 
 public class SimilarlyPerceptron extends Perceptron {

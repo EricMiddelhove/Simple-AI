@@ -4,9 +4,11 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
+ * license = CC-BY-SA-NC
+ * http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 
-public class Perceptron {
+public class Perceptron{
 	
 	public double[] inputs;
 	public Weights weights;
@@ -19,9 +21,7 @@ public class Perceptron {
 	
 	/**
 	 * initialize Perceptron with preinstallt weight
-	 * @param w1 weigth red
-	 * @param w2 weight green
-	 * @param w3 weight blue
+	 * @param weights weightObject
 	 */
 	public Perceptron(Weights weights) {
 		this.weights = weights;
@@ -30,7 +30,11 @@ public class Perceptron {
 	/**
 	 * Initialize untrained perceptron
 	 */
-	public Perceptron() {}
+	public Perceptron() {
+		
+		//TODO:Initialize weights with random
+		
+	}
 	
 	/**
 	 * Ask Perceptron if it is the coller it is trained for only use after training
@@ -266,13 +270,5 @@ public class Perceptron {
 			}
 		}
 	}
-	
-	public boolean isRed(double[] v) {
-		if(guess(v) == -1) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-	
+		
 }

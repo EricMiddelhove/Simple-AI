@@ -1,7 +1,12 @@
 package AI;
 
 import java.io.Serializable;
-
+/**
+ * 
+ * @author Fabian Gabriel
+ * license = CC-BY-SA-NC
+ * http://creativecommons.org/licenses/by-nc-sa-/4.0/
+ */
 public class Weights implements Serializable {
 	
 	private static final long serialVersionUID = -2259896498971209419L;
