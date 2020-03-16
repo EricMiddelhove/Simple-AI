@@ -131,7 +131,7 @@ public class Network {
 	 * @param p      perceptron to get the file for
 	 * @return
 	 */
-	private File getWeightsaveFor(File folder, String id, Perceptron p) {
+	private File getWeightsaveFor(File folder, String id, AbstractPerceptron p) {
 		// currently doesn't check if folder is a directory or not
 		return new File(folder, id + ".weightsave");
 
@@ -148,7 +148,7 @@ public class Network {
 	 * @param p      perceptron to load
 	 * @return load succeeded
 	 */
-	private boolean _loadWeights(File folder, String id, Perceptron p) {
+	private boolean _loadWeights(File folder, String id, AbstractPerceptron p) {
 		File apropFile = getWeightsaveFor(folder, id, p);
 		if (apropFile.exists() && apropFile.isFile()) {
 			try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(apropFile))) {
@@ -192,7 +192,7 @@ public class Network {
 	 * @param id     temporary whilst Perceptron has none
 	 * @param p      perceptron to save
 	 */
-	private void _saveWeights(File folder, String id, Perceptron p) {
+	private void _saveWeights(File folder, String id, AbstractPerceptron p) {
 		// simple way saving the wheights
 		File apropFile = getWeightsaveFor(folder, id, p);
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(apropFile))) {
