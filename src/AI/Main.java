@@ -9,9 +9,8 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
- * 
- * license = CC-BY-SA-NC
- * http://creativecommons.org/licenses/by-nc-sa-/4.0/
+ *         license = CC-BY-SA-NC
+ *         http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 public class Main {
 	
@@ -64,19 +63,7 @@ public class Main {
 				 */
 				// f(y,newPic) < x // queer line
 				if(true) {
-					if(c == RGBColor.RED) {
-						newPic.setPixel(y, x, 255, 0, 0);
-					} else if(c == RGBColor.GREEN) {
-						newPic.setPixel(y, x, 0, 255, 0);
-					} else if(c == RGBColor.BLUE) {
-						newPic.setPixel(y, x, 0, 0, 255);
-					} else if(c == RGBColor.YELLOW) {
-						newPic.setPixel(y, x, 255, 255, 0);
-					} else if(c == RGBColor.WHITE) {
-						newPic.setPixel(y, x, 255, 255, 255);
-					} else {
-						newPic.setPixel(y, x, 0, 0, 0);
-					}
+					newPic.setPixel(x, y, c);
 					if(verbose) {
 						System.out.println(" change ");
 					}
