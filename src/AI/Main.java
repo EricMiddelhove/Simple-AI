@@ -9,8 +9,10 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
+ * 
+ * icense = CC-BY-SA-NC
+ * http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
-
 public class Main {
 	
 	private static final File folder = new File("weights");
@@ -36,12 +38,12 @@ public class Main {
 		Network n = new Network();
 		// simple
 		if(!n.loadWeights(folder)) {
-			System.err.println("Oh oh ...");
+			System.err.println("could not load weights because there is no data");
 			// halt execution because weights are uninitialized
 			// System.exit(1);
 		}
 		
-		Perceptron.Color c;
+		Colors c;
 		
 		int[] dimensions = picture.getDimensions();
 		
@@ -62,15 +64,15 @@ public class Main {
 				 */
 				// f(y,newPic) < x // queer line
 				if(true) {
-					if(c == Perceptron.Color.RED) {
+					if(c == Colors.RED) {
 						newPic.setPixel(y, x, 255, 0, 0);
-					} else if(c == Perceptron.Color.GREEN) {
+					} else if(c == Colors.GREEN) {
 						newPic.setPixel(y, x, 0, 255, 0);
-					} else if(c == Perceptron.Color.BLUE) {
+					} else if(c == Colors.BLUE) {
 						newPic.setPixel(y, x, 0, 0, 255);
-					} else if(c == Perceptron.Color.YELLOW) {
+					} else if(c == Colors.YELLOW) {
 						newPic.setPixel(y, x, 255, 255, 0);
-					} else if(c == Perceptron.Color.WHITE) {
+					} else if(c == Colors.WHITE) {
 						newPic.setPixel(y, x, 255, 255, 255);
 					} else {
 						newPic.setPixel(y, x, 0, 0, 0);
@@ -114,152 +116,6 @@ public class Main {
 		double raw = ((double) dimensions[1]) / ((double) dimensions[0]);
 		return raw * x;
 		
-	}
-	
-	public static void changeColor() {
-		int[] dimensions = picture.getDimensions();
-		
-		Picture newPic = new Picture(dimensions[0], dimensions[1]);
-		
-		trainDemo();
-		
-		for(int i = 0; i < dimensions[1]; i++) {
-			for(int j = 1; j < dimensions[0]; j++) {
-				
-				/**
-				 * Für jeden pixel des alten bildes:
-				 * 1. Prüfen ob Rot
-				 * Ja -> durch grün ersetzen
-				 * Nein -> Übertragen
-				 */
-				
-				// Holen uns Farbdaten und speichern sie in Double Array
-				double[] currentColorData = new double[3];
-				int[] currentColorInt = picture.getRGBOf(j, i);
-				
-				for(int x = 0; x < currentColorInt.length; x++) {
-					currentColorData[x] = currentColorInt[x];
-				}
-				
-				if(per.isRed(currentColorData)) {
-					newPic.setPixel(j, i, currentColorInt[0], currentColorInt[1], currentColorInt[2]);
-				} else {
-					newPic.setPixel(j, i, 255, 255, 255);
-				}
-			}
-		}
-		newPic.saveImage();
-		
-	}
-	
-	public static void trainDemo() {
-		
-		System.out.println("\n\nTraining ...");
-		
-		if(verbose) {
-			System.out.println("x: " + red.getDimensions()[0]);
-		}
-		if(verbose) {
-			System.out.println("y: " + red.getDimensions()[1]);
-			// System.out.println(notRed.getDimensions()[1]);
-		}
-		
-		int[] dimensions = red.getDimensions();
-		
-		for(int i = 0; i < 210; i++) {
-			for(int j = 0; j < dimensions[0]; j++) {
-				
-				// Take RGB Value of current pixel
-				int[] rgbValue = red.getRGBOf(j, i);
-				int[] negRGBVal = notRed.getRGBOf(j, i);
-				
-				// Tell AI that this is red
-				per.train(per.guess(rgbValue), 1);
-				per.train(per.guess(negRGBVal), -1);
-				
-				if(verbose) {
-					System.out.println("Trained Pixel " + j + " | " + i);
-				}
-				
-				if(!verbose && (((j % dimensions[0]) - 1) == 0)) {
-					System.out.print(".");
-				}
-			}
-		}
-		
-		if(verbose) {
-			System.out.println("\nFinal weights: ");
-			for(double il : per.weights) {
-				System.out.println(il);
-			}
-			
-			System.out.println("\nTotal Trained Datasets: " + (dimensions[0] * 210 * 2));
-			
-			System.out.println("\nFinal Guess: ");
-			System.out.println("\nValues: 135, 255, 153 (Green)");
-			System.out.println(per.guess(new double[] {135, 255, 153}));
-			
-			System.out.println("\nValues: 168, 36, 36 (Red)");
-			System.out.println(per.guess(new double[] {168, 36, 36}));
-		}
-		
-		// per.weights = null;
-	}
-	
-	public static void guessRed() {
-		
-		System.out.println("\n\nGuessing ...");
-		
-		int[] dimensions = picture.getDimensions();
-		
-		int y = 0, n = 0;
-		
-		try {
-			
-			for(int i = 0; i < dimensions[1]; i++) {
-				
-				for(int j = 0; j < dimensions[0]; j++) {
-					
-					double[] val = new double[3];
-					
-					val[0] = picture.getRGBOf(j, i)[0];
-					val[1] = picture.getRGBOf(j, i)[1];
-					val[2] = picture.getRGBOf(j, i)[2];
-					
-					picInBool[j][i] = per.isRed(val);
-					
-					if(verbose) {
-						System.out.print("r: " + val[0] + " g: " + val[1] + " b: " + val[2]);
-					}
-					
-					if(per.isRed(val)) {
-						if(verbose) {
-							System.out.print(" |yes| x: " + j + " y: " + i + "\n");
-						}
-						
-						y++;
-					} else {
-						if(verbose) {
-							System.out.println("\n");
-						}
-						n++;
-					}
-					
-					if(!verbose && (((j % dimensions[0]) - 1) == 0)) {
-						System.out.print(".");
-					}
-				}
-				
-			}
-			
-			System.out.println("\nYes: " + y + " No: " + n);
-			
-		} catch(ArrayIndexOutOfBoundsException e) {
-			System.out.println("Error");
-			
-			System.out.println("\nYes: " + y + " No: " + n);
-			
-		}
 	}
 	
 	public static void printOutputArray() {
