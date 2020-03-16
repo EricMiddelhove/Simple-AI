@@ -58,39 +58,39 @@ public class Network {
 	 * @param pixelValue color which should be analyzed
 	 * @return Perceptron.Color representing the main component
 	 */
-	public Colors evaluate(Color pixelValue) {
+	public RGBColor evaluate(Color pixelValue) {
 
 		// Black or white
 
 		if (whiteP.guess(pixelValue.getColorData()) == 1) {
 
-			return Colors.WHITE;
+			return RGBColor.WHITE;
 
 		}
 
 		// only if not black or white
 
 		// Color guessing
-		float redStat = (float) redP.guessAnalog(pixelValue.getColorData(), Colors.RED);
-		float greenStat = (float) greenP.guessAnalog(pixelValue.getColorData(), Colors.GREEN);
-		float blueStat = (float) blueP.guessAnalog(pixelValue.getColorData(), Colors.BLUE);
-		float yellowStat = (float) yellowP.guessAnalog(pixelValue.getColorData(), Colors.YELLOW);
+		float redStat = (float) redP.guessAnalog(pixelValue.getColorData(), RGBColor.RED);
+		float greenStat = (float) greenP.guessAnalog(pixelValue.getColorData(), RGBColor.GREEN);
+		float blueStat = (float) blueP.guessAnalog(pixelValue.getColorData(), RGBColor.BLUE);
+		float yellowStat = (float) yellowP.guessAnalog(pixelValue.getColorData(), RGBColor.YELLOW);
 
 		// Red guessing and saving
-		float val = (float) redP.guessAnalog(pixelValue.getColorData(), Colors.RED);
-		Status red = new Status(Colors.RED, val);
+		float val = (float) redP.guessAnalog(pixelValue.getColorData(), RGBColor.RED);
+		Status red = new Status(RGBColor.RED, val);
 
 		// green guessing and saving
-		val = (float) greenP.guessAnalog(pixelValue.getColorData(), Colors.GREEN);
-		Status green = new Status(Colors.GREEN, val);
+		val = (float) greenP.guessAnalog(pixelValue.getColorData(), RGBColor.GREEN);
+		Status green = new Status(RGBColor.GREEN, val);
 
 		// blue guessing and saving
-		val = (float) blueP.guessAnalog(pixelValue.getColorData(), Colors.BLUE);
-		Status blue = new Status(Colors.BLUE, val);
+		val = (float) blueP.guessAnalog(pixelValue.getColorData(), RGBColor.BLUE);
+		Status blue = new Status(RGBColor.BLUE, val);
 
 		// yellow guessing and saving
-		val = (float) yellowP.guessAnalog(pixelValue.getColorData(), Colors.YELLOW);
-		Status yellow = new Status(Colors.YELLOW, val);
+		val = (float) yellowP.guessAnalog(pixelValue.getColorData(), RGBColor.YELLOW);
+		Status yellow = new Status(RGBColor.YELLOW, val);
 
 		// saving all guessing status data into an array so we can sort it
 		Status[] guesses = { red, green, blue, yellow };
@@ -221,10 +221,10 @@ public class Network {
 
 	private class Status {
 
-		Colors color;
+		RGBColor color;
 		float value;
 
-		Status(Colors color, float value) {
+		Status(RGBColor color, float value) {
 
 			this.color = color;
 			this.value = value;

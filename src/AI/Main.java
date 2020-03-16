@@ -10,7 +10,7 @@ import PicSerialsization.Picture;
 /**
  * @author ericmiddelhove
  * 
- * icense = CC-BY-SA-NC
+ * license = CC-BY-SA-NC
  * http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 public class Main {
@@ -43,7 +43,7 @@ public class Main {
 			// System.exit(1);
 		}
 		
-		Colors c;
+		RGBColor c;
 		
 		int[] dimensions = picture.getDimensions();
 		
@@ -64,15 +64,15 @@ public class Main {
 				 */
 				// f(y,newPic) < x // queer line
 				if(true) {
-					if(c == Colors.RED) {
+					if(c == RGBColor.RED) {
 						newPic.setPixel(y, x, 255, 0, 0);
-					} else if(c == Colors.GREEN) {
+					} else if(c == RGBColor.GREEN) {
 						newPic.setPixel(y, x, 0, 255, 0);
-					} else if(c == Colors.BLUE) {
+					} else if(c == RGBColor.BLUE) {
 						newPic.setPixel(y, x, 0, 0, 255);
-					} else if(c == Colors.YELLOW) {
+					} else if(c == RGBColor.YELLOW) {
 						newPic.setPixel(y, x, 255, 255, 0);
-					} else if(c == Colors.WHITE) {
+					} else if(c == RGBColor.WHITE) {
 						newPic.setPixel(y, x, 255, 255, 255);
 					} else {
 						newPic.setPixel(y, x, 0, 0, 0);
