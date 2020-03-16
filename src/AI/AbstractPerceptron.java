@@ -12,8 +12,20 @@ import PicSerialsization.Picture;
  */
 public abstract class AbstractPerceptron {
 	
+	// if a perceptron has no id it cannot be saved
+	public String id;
 	public double[] inputs;
 	public Weights weights;
+	
+	public AbstractPerceptron() {}
+	
+	public AbstractPerceptron(String id) {
+		this.id = id;
+	}
+	
+	public String getId() {
+		return id;
+	}
 	
 	public static double LEARNING_RATE = 0.2;
 	
