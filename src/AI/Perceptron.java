@@ -8,23 +8,15 @@ import PicSerialsization.Picture;
  * http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 
-public class Perceptron{
+public class Perceptron extends AbstractPerceptron{
 	
-	public double[] inputs;
-	public Weights weights;
-	
-	public static double LEARNING_RATE = 0.2;
-	
-	public static enum Color {
-		RED, GREEN, BLUE, YELLOW, WHITE
-	};
 	
 	/**
 	 * initialize Perceptron with preinstallt weight
 	 * @param weights weightObject
 	 */
 	public Perceptron(Weights weights) {
-		this.weights = weights;
+		super.weights = weights;
 	}
 	
 	/**
@@ -32,32 +24,12 @@ public class Perceptron{
 	 */
 	public Perceptron() {
 		
-		//TODO:Initialize weights with random
+		//TODO:Initialize weights with random values
 		
 	}
 	
-	/**
-	 * Ask Perceptron if it is the coller it is trained for only use after training
-	 * else NullPointerException
-	 * @param inputs colorData {r,g,b}
-	 * @return 1 || -1 = true || false
-	 */
-	public int guess(int[] inputs) {
-		
-		double[] newInputs = new double[inputs.length];
-		for(int i = 0; i < inputs.length; i++) {
-			newInputs[i] = inputs[i];
-		}
-		
-		return guess(newInputs);
-	}
 	
-	/**
-	 * Ask Perceptron if it is the coller it is trained for only use after training
-	 * else NullPointerException
-	 * @param inputs colorData {r,g,b}
-	 * @return 1 || -1 = true || false
-	 */
+	
 	public int guess(double[] ins) {
 		
 		inputs = new double[ins.length + 1];
@@ -118,7 +90,7 @@ public class Perceptron{
 	 * @param inputs RGB Array
 	 * @return value between 0-1 1 = hit 0 = no hit
 	 */
-	public double guessAnalog(int[] js, Color red2) {
+	public double guessAnalog(int[] js, Colors color) {
 		
 		// Sum up mechanism {
 		inputs = new double[js.length + 1];
@@ -174,15 +146,15 @@ public class Perceptron{
 			// Prozentuale Aufteilung zwischen 0 und 100% Rot
 			// Array Values: {red, green, blue, 0 catch}
 			
-			if(red2 == Color.RED) {
+			if(color == Colors.RED) {
 				inputs = new double[] {255, 0, 0, 1};
-			} else if(red2 == Color.GREEN) {
+			} else if(color == Colors.GREEN) {
 				inputs = new double[] {0, 255, 0, 1};
-			} else if(red2 == Color.BLUE) {
+			} else if(color == Colors.BLUE) {
 				inputs = new double[] {0, 0, 255, 1};
-			} else if(red2 == Color.WHITE) {
+			} else if(color == Colors.WHITE) {
 				inputs = new double[] {255, 255, 255, 1};
-			} else if(red2 == Color.YELLOW) {
+			} else if(color == Colors.YELLOW) {
 				inputs = new double[] {255, 255, 0, 1};
 			} else {
 				System.out.println("Illegal color Perceptron 188");
