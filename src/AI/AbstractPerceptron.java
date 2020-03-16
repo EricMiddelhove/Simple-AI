@@ -7,8 +7,8 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
- * license = CC-BY-SA-NC
- * http://creativecommons.org/licenses/by-nc-sa-/4.0/
+ *         license = CC-BY-SA-NC
+ *         http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 public abstract class AbstractPerceptron {
 	
@@ -41,7 +41,7 @@ public abstract class AbstractPerceptron {
 		return guess(newInputs);
 	}
 	
-	public abstract double guessAnalog(int[] js, Colors c);
+	public abstract double guessAnalog(int[] js, RGBColor color);
 	
 	public abstract void train(int guess, int target);
 	

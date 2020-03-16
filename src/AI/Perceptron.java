@@ -4,12 +4,11 @@ import PicSerialsization.Picture;
 
 /**
  * @author ericmiddelhove
- * license = CC-BY-SA-NC
- * http://creativecommons.org/licenses/by-nc-sa-/4.0/
+ *         license = CC-BY-SA-NC
+ *         http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 
-public class Perceptron extends AbstractPerceptron{
-	
+public class Perceptron extends AbstractPerceptron {
 	
 	/**
 	 * initialize Perceptron with preinstallt weight
@@ -24,12 +23,11 @@ public class Perceptron extends AbstractPerceptron{
 	 */
 	public Perceptron() {
 		
-		//TODO:Initialize weights with random values
+		// TODO:Initialize weights with random values
 		
 	}
 	
-	
-	
+	@Override
 	public int guess(double[] ins) {
 		
 		inputs = new double[ins.length + 1];
@@ -90,7 +88,8 @@ public class Perceptron extends AbstractPerceptron{
 	 * @param inputs RGB Array
 	 * @return value between 0-1 1 = hit 0 = no hit
 	 */
-	public double guessAnalog(int[] js, Colors color) {
+	@Override
+	public double guessAnalog(int[] js, RGBColor color) {
 		
 		// Sum up mechanism {
 		inputs = new double[js.length + 1];
@@ -146,19 +145,8 @@ public class Perceptron extends AbstractPerceptron{
 			// Prozentuale Aufteilung zwischen 0 und 100% Rot
 			// Array Values: {red, green, blue, 0 catch}
 			
-			if(color == Colors.RED) {
-				inputs = new double[] {255, 0, 0, 1};
-			} else if(color == Colors.GREEN) {
-				inputs = new double[] {0, 255, 0, 1};
-			} else if(color == Colors.BLUE) {
-				inputs = new double[] {0, 0, 255, 1};
-			} else if(color == Colors.WHITE) {
-				inputs = new double[] {255, 255, 255, 1};
-			} else if(color == Colors.YELLOW) {
-				inputs = new double[] {255, 255, 0, 1};
-			} else {
-				System.out.println("Illegal color Perceptron 188");
-			}
+			inputs = new double[] {0, 0, 0, 1};
+			System.arraycopy(color.get(), 0, inputs, 0, 3);
 			
 			// Guessing for 100% value
 			float ground = 0;
@@ -181,6 +169,7 @@ public class Perceptron extends AbstractPerceptron{
 	 * @param guess
 	 * @param target
 	 */
+	@Override
 	public void train(int guess, int target) {
 		int error = target - guess;
 		
@@ -202,6 +191,7 @@ public class Perceptron extends AbstractPerceptron{
 	 * @param truePath
 	 * @param falsePath
 	 */
+	@Override
 	public void trainFromPicture(String truePath, String falsePath) {
 		
 		Picture correct = new Picture(truePath);
@@ -242,5 +232,5 @@ public class Perceptron extends AbstractPerceptron{
 			}
 		}
 	}
-		
+	
 }

@@ -5,28 +5,27 @@ package AI;
 
 /**
  * @author ericmiddelhove
- * license = CC-BY-SA-NC
- * http://creativecommons.org/licenses/by-nc-sa-/4.0/
+ *         license = CC-BY-SA-NC
+ *         http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 
 public class BWPerceptron extends AbstractPerceptron {
 	
 	int power = 300; // Describes all inputs added; Bigger than thsi value = white else black
 	int variety = 7; // Describes difference between average input and actual input
-		
+	
 	@Override
 	public int guess(int[] ins) {
 		
-		this.inputs = new double[ins.length];
+		inputs = new double[ins.length];
 		
 		for(int i = 0; i < ins.length; i++) {
 			
-			this.inputs[i] = (double) ins[i];
+			inputs[i] = ins[i];
 			
 		}
 		
-		return this.guess(this.inputs);
-		
+		return this.guess(inputs);
 		
 	}
 	
@@ -37,17 +36,17 @@ public class BWPerceptron extends AbstractPerceptron {
 			
 			// get average input
 			int sum = 0;
-			for(double i : this.inputs) {
+			for(double i : inputs) {
 				sum += i;
 			}
-			int avg = sum / this.inputs.length;
+			int avg = sum / inputs.length;
 			
 			// Getting average variety
 			int sum2 = 0;
-			for(double i : this.inputs) {
+			for(double i : inputs) {
 				sum2 += (i - avg);
 			}
-			int avgVar = sum2 / this.inputs.length;
+			int avgVar = sum2 / inputs.length;
 			
 			// Adjusting variety
 			variety += avgVar * LEARNING_RATE;
@@ -60,7 +59,7 @@ public class BWPerceptron extends AbstractPerceptron {
 			
 		}
 	}
-
+	
 	@Override
 	public int guess(double[] inputs) {
 		// TODO Auto-generated method stub
@@ -84,9 +83,9 @@ public class BWPerceptron extends AbstractPerceptron {
 		
 		return -1;
 	}
-
+	
 	@Override
-	public double guessAnalog(int[] js, Colors c) {
+	public double guessAnalog(int[] js, RGBColor c) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
