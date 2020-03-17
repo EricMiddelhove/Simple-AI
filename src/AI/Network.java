@@ -3,8 +3,6 @@
  */
 package AI;
 
-import java.io.File;
-
 import PicSerialsization.Color;
 
 /**
@@ -13,7 +11,7 @@ import PicSerialsization.Color;
  *         http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
 
-public class Network {
+public class Network extends AbstractNetwork {
 	
 	// Neurons
 	private Perceptron redP = new Perceptron("redP");
@@ -21,6 +19,8 @@ public class Network {
 	private Perceptron blueP = new Perceptron("blueP");
 	private Perceptron yellowP = new Perceptron("yellowP");
 	private BWPerceptron whiteP = new BWPerceptron("whiteP");
+	
+	private AbstractPerceptron[] saved = {redP, greenP, blueP, yellowP, whiteP};
 	
 	/**
 	 * initializing neural network and trains it with picture preset datas
@@ -103,44 +103,9 @@ public class Network {
 		return guesses[0].color;
 	}
 	
-	/**
-	 * ensures that folder exists
-	 * @param folder
-	 */
-	private void ensureFolder(File folder) {
-		if(!folder.exists() || !folder.isDirectory()) {
-			folder.mkdirs();
-		}
-	}
-	
-	/**
-	 * @param folder load folder
-	 * @return load succeeded
-	 */
-	public boolean loadWeights(File folder) {
-		boolean result = true;
-		ensureFolder(folder);
-		
-		result &= blueP.loadWeights(folder);
-		result &= greenP.loadWeights(folder);
-		result &= redP.loadWeights(folder);
-		result &= whiteP.loadWeights(folder);
-		result &= yellowP.loadWeights(folder);
-		
-		return result;
-	}
-	
-	/**
-	 * @param folder save folder
-	 */
-	public void saveWeights(File folder) {
-		ensureFolder(folder);
-		
-		blueP.saveWeights(folder);
-		greenP.saveWeights(folder);
-		redP.saveWeights(folder);
-		yellowP.saveWeights(folder);
-		whiteP.saveWeights(folder);
+	@Override
+	protected AbstractPerceptron[] getCandidatesForPersistence() {
+		return saved;
 	}
 	
 	private class Status {
