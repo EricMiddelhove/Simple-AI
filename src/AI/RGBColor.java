@@ -47,6 +47,6 @@ public enum RGBColor {
 	
 	public double[] get() {
 		return new double[] {r, g, b};
-	}
+	}	
 	
 }
