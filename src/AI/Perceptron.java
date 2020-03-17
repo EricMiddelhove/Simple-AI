@@ -14,18 +14,22 @@ public class Perceptron extends AbstractPerceptron {
 	 * initialize Perceptron with preinstallt weight
 	 * @param weights weightObject
 	 */
-	public Perceptron(Weights weights) {
+	public Perceptron(String id, Weights weights) {
+		super(id);
 		super.weights = weights;
 	}
 	
 	/**
 	 * Initialize untrained perceptron
 	 */
-	public Perceptron() {
+	public Perceptron(String id) {
+		super(id);
 		
 		// TODO:Initialize weights with random values
 		
 	}
+	
+	public Perceptron() {}
 	
 	@Override
 	public int guess(double[] ins) {

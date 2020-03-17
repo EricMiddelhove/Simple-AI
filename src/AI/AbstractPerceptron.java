@@ -3,6 +3,13 @@
  */
 package AI;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 import PicSerialsization.Picture;
 
 /**
@@ -12,8 +19,20 @@ import PicSerialsization.Picture;
  */
 public abstract class AbstractPerceptron {
 	
+	// if a perceptron has no id it cannot be saved
+	public String id;
 	public double[] inputs;
 	public Weights weights;
+	
+	public AbstractPerceptron() {}
+	
+	public AbstractPerceptron(String id) {
+		this.id = id;
+	}
+	
+	public String getId() {
+		return id;
+	}
 	
 	public static double LEARNING_RATE = 0.2;
 	
@@ -90,5 +109,42 @@ public abstract class AbstractPerceptron {
 			}
 		}
 		
+	}
+	
+	private void ensureId() {
+		if(id == null) {
+			throw new RuntimeException("Perceptron has no id and cannot be saved/loaded");
+		}
+	}
+	
+	public void saveWeights(File folder) {
+		ensureId();
+		
+		File apropFile = new File(folder, getId() + ".weightsave");
+		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(apropFile))) {
+			oos.writeObject(weights);
+		} catch(IOException e) {
+			// oooh something happened
+			e.printStackTrace();
+		}
+	}
+	
+	public boolean loadWeights(File folder) {
+		ensureId();
+		
+		File apropFile = new File(folder, getId() + ".weightsave");
+		if(apropFile.exists() && apropFile.isFile()) {
+			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(apropFile))) {
+				weights = (Weights) ois.readObject();
+				return true;
+			} catch(ClassNotFoundException e) {
+				// this should (absolutely) not happen with the current implementation
+				e.printStackTrace();
+			} catch(IOException e) {
+				// oooh something happened
+				e.printStackTrace();
+			}
+		}
+		return false;
 	}
 }
