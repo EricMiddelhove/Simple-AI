@@ -4,11 +4,6 @@
 package AI;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 import PicSerialsization.Color;
 
@@ -119,45 +114,6 @@ public class Network {
 	}
 	
 	/**
-	 * gets the weightsave file for a perceptron
-	 * @param folder parent folder
-	 * @param p      perceptron to get the file for
-	 * @return
-	 */
-	private File getWeightsaveFor(File folder, AbstractPerceptron p) {
-		// currently doesn't check if folder is a directory or not
-		if(p.getId() == null) {
-			throw new RuntimeException("Perceptron has no id and thus cannot have a deterministic file");
-		}
-		return new File(folder, p.getId() + ".weightsave");
-	}
-	
-	/**
-	 * loads the weights of a single perceptron
-	 * @param folder parent folder
-	 * @param id     temporary whilst Perceptron has none
-	 * @param p      perceptron to load
-	 * @return load succeeded
-	 */
-	private boolean _loadWeights(File folder, AbstractPerceptron p) {
-		File apropFile = getWeightsaveFor(folder, p);
-		if(apropFile.exists() && apropFile.isFile()) {
-			try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(apropFile))) {
-				p.weights = (Weights) ois.readObject();
-				return true;
-			} catch(ClassNotFoundException e) {
-				// this shouldn't happen with the current implementation
-				e.printStackTrace();
-			} catch(IOException e) {
-				// oooh something happened
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
-	
-	/**
-	 * currently just a wrapper method
 	 * @param folder load folder
 	 * @return load succeeded
 	 */
@@ -165,46 +121,26 @@ public class Network {
 		boolean result = true;
 		ensureFolder(folder);
 		
-		// usage of raw strings is unsafe -> use common constants ...
-		result &= _loadWeights(folder, blueP);
-		result &= _loadWeights(folder, greenP);
-		result &= _loadWeights(folder, redP);
-		result &= _loadWeights(folder, whiteP);
-		result &= _loadWeights(folder, yellowP);
+		result &= blueP.loadWeights(folder);
+		result &= greenP.loadWeights(folder);
+		result &= redP.loadWeights(folder);
+		result &= whiteP.loadWeights(folder);
+		result &= yellowP.loadWeights(folder);
 		
 		return result;
 	}
 	
 	/**
-	 * saves the weights of a signle perceptron
-	 * @param folder parent folder
-	 * @param id     temporary whilst Perceptron has none
-	 * @param p      perceptron to save
-	 */
-	private void _saveWeights(File folder, AbstractPerceptron p) {
-		// simple way saving the wheights
-		File apropFile = getWeightsaveFor(folder, p);
-		try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(apropFile))) {
-			oos.writeObject(p.weights);
-		} catch(IOException e) {
-			// oooh something happened
-			e.printStackTrace();
-		}
-	}
-	
-	/**
-	 * currently just a wrapper method
 	 * @param folder save folder
 	 */
 	public void saveWeights(File folder) {
 		ensureFolder(folder);
 		
-		// usage of raw strings is unsafe -> use common constants ...
-		_saveWeights(folder, blueP);
-		_saveWeights(folder, greenP);
-		_saveWeights(folder, redP);
-		_saveWeights(folder, whiteP);
-		_saveWeights(folder, yellowP);
+		blueP.saveWeights(folder);
+		greenP.saveWeights(folder);
+		redP.saveWeights(folder);
+		yellowP.saveWeights(folder);
+		whiteP.saveWeights(folder);
 	}
 	
 	private class Status {
