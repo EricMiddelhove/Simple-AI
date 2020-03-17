@@ -14,8 +14,6 @@ import PicSerialsization.Picture;
  */
 public class Main {
 	
-	private static final File folder = new File("weights");
-	
 	static Perceptron p = new Perceptron();
 	
 	// Training data
@@ -34,7 +32,7 @@ public class Main {
 	public static void main(String[] args) {
 		Network n = new Network();
 		// simple
-		if(!n.loadWeights(folder)) {
+		if(!n.loadWeights(n.FOLDER)) {
 			System.err.println("could not load weights because there is no data");
 			// halt execution because weights are uninitialized
 			// System.exit(1);
@@ -80,7 +78,6 @@ public class Main {
 		newPic.saveImage();
 		
 		// simple
-		n.saveWeights(folder);
 	}
 	
 	/**

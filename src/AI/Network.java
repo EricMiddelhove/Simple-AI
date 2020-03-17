@@ -15,23 +15,17 @@ import PicSerialsization.Color;
 
 public class Network {
 	
-	// Neurons
-<<<<<<< HEAD
+	public static final File FOLDER = new File("weights");
+
+	
 	private Perceptron redP = new Perceptron("redP");
 	private Perceptron greenP = new Perceptron("greenP");
 	private Perceptron blueP = new Perceptron("blueP");
 	private Perceptron yellowP = new Perceptron("yellowP");
 	private BWPerceptron whiteP = new BWPerceptron("whiteP");
-	
-=======
-	private Perceptron redP = new Perceptron();
-	private Perceptron greenP = new Perceptron();
-	private Perceptron blueP = new Perceptron();
-	private Perceptron yellowP = new Perceptron();
-	private BWPerceptron whiteP = new BWPerceptron();
-	private BWPerceptron blackP = new BWPerceptron();
+	private BWPerceptron blackP = new BWPerceptron("blackP");
 
->>>>>>> new-perceptrons
+
 	/**
 	 * initializing neural network and trains it with picture preset datas
 	 */
@@ -52,12 +46,13 @@ public class Network {
 		System.out.println("training white perceptron");
 		whiteP.trainFromPicture("src/Training Data/WHITE.jpeg", "src/Training Data/NOTWHITE.jpg");
 		
-<<<<<<< HEAD
-=======
 		System.out.println("training black perceptron");
 		blackP.trainFromPicture("src/Training Data/NOTWHITE.jpg","src/Training Data/WHITE.jpeg");
 
->>>>>>> new-perceptrons
+
+		saveWeights(FOLDER, new AbstractPerceptron[] {redP,greenP,blueP,yellowP,whiteP,blackP});
+
+
 	}
 	
 	/**
@@ -72,13 +67,10 @@ public class Network {
 		if(whiteP.guess(pixelValue.getColorData()) == 1) {
 			
 			return RGBColor.WHITE;
-<<<<<<< HEAD
-=======
 
 		}else if(blackP.guess(pixelValue.getColorData()) == 1) {
 			
 			return RGBColor.BLACK;
->>>>>>> new-perceptrons
 			
 		}
 		
@@ -108,11 +100,7 @@ public class Network {
 		
 		// saving all guessing status data into an array so we can sort it
 		Status[] guesses = {red, green, blue, yellow};
-<<<<<<< HEAD
-		
-=======
 
->>>>>>> new-perceptrons
 		// sorting it by value, bigges first, simple bubblesort
 		for(int j = 0; j < guesses.length; j++) {
 			for(int i = 0; i < (guesses.length - 1); i++) {
