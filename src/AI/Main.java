@@ -31,8 +31,6 @@ public class Main {
 	// Setting
 	static boolean verbose = false;
 	
-	private static Perceptron per = new Perceptron();
-	
 	public static void main(String[] args) {
 		Network n = new Network();
 		// simple
@@ -61,9 +59,9 @@ public class Main {
 				 * m = y2 - y1 / x2 -x1
 				 * m = - dimensions[1] / - dimensions [0]
 				 */
-				// f(y,newPic) < x // queer line
+				// f(y,newPic) < x // queer line	
 				if(true) {
-					newPic.setPixel(x, y, c);
+						newPic.setPixel(y, x, c);
 					if(verbose) {
 						System.out.println(" change ");
 					}
@@ -122,7 +120,7 @@ public class Main {
 		}
 	}
 	
-	public static void printOutputToFile() {
+	public static void printOutputToFile() {	
 		try {
 			File myObj = new File("output.txt");
 			

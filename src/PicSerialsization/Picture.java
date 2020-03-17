@@ -48,7 +48,7 @@ public class Picture {
 	 * @param r color
 	 */
 	public void setPixel(int x, int y, RGBColor c) {
-		setPixel(x, y, (int) c.getR(), (int) c.getG(), (int) c.getB());
+			setPixel(x, y, (int) c.getR(), (int) c.getG(), (int) c.getB());
 	}
 	
 	/**
