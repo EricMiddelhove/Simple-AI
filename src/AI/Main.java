@@ -31,8 +31,6 @@ public class Main {
 	// Setting
 	static boolean verbose = false;
 	
-	private static Perceptron per = new Perceptron();
-	
 	public static void main(String[] args) {
 		Network n = new Network();
 		// simple
@@ -50,11 +48,11 @@ public class Main {
 		
 		System.out.println("Printing new image ...");
 		
-		for(int y = 0; y < dimensions[0]; y++) {
+		for(int y = 0; y < dimensions[1]; y++) {
 			
-			for(int x = 0; x < dimensions[1]; x++) {
+			for(int x = 0; x < dimensions[0]; x++) {
 				
-				Color col = new Color(picture.getRGBOf(y, x));
+				Color col = new Color(picture.getRGBOf(x, y));
 				c = n.evaluate(col);
 				
 				/**
@@ -63,25 +61,13 @@ public class Main {
 				 */
 				// f(y,newPic) < x // queer line
 				if(true) {
-					if(c == RGBColor.RED) {
-						newPic.setPixel(y, x, 255, 0, 0);
-					} else if(c == RGBColor.GREEN) {
-						newPic.setPixel(y, x, 0, 255, 0);
-					} else if(c == RGBColor.BLUE) {
-						newPic.setPixel(y, x, 0, 0, 255);
-					} else if(c == RGBColor.YELLOW) {
-						newPic.setPixel(y, x, 255, 255, 0);
-					} else if(c == RGBColor.WHITE) {
-						newPic.setPixel(y, x, 255, 255, 255);
-					} else {
-						newPic.setPixel(y, x, 0, 0, 0);
-					}
+					newPic.setPixel(x, y, c);
 					if(verbose) {
 						System.out.println(" change ");
 					}
 					continue;
 				} else {
-					newPic.setPixel(y, x, col.r, col.g, col.b);
+					newPic.setPixel(x, y, col.r, col.g, col.b);
 					if(verbose) {
 						System.out.println(" keep ----- ");
 					}

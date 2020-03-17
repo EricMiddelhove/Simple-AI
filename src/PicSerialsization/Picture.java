@@ -9,6 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import AI.RGBColor;
+
 /**
  * @author ericmiddelhove
  */
@@ -37,6 +39,16 @@ public class Picture {
 	public Picture(int w_, int h_) {
 		// Creates new image wit RGB Range
 		img = new BufferedImage(w_, h_, BufferedImage.TYPE_INT_RGB);
+	}
+	
+	/**
+	 * Sets pixel for specified coordinate
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @param r color
+	 */
+	public void setPixel(int x, int y, RGBColor c) {
+			setPixel(x, y, (int) c.getR(), (int) c.getG(), (int) c.getB());
 	}
 	
 	/**
