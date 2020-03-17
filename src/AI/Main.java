@@ -48,26 +48,26 @@ public class Main {
 		
 		System.out.println("Printing new image ...");
 		
-		for(int y = 0; y < dimensions[0]; y++) {
+		for(int y = 0; y < dimensions[1]; y++) {
 			
-			for(int x = 0; x < dimensions[1]; x++) {
+			for(int x = 0; x < dimensions[0]; x++) {
 				
-				Color col = new Color(picture.getRGBOf(y, x));
+				Color col = new Color(picture.getRGBOf(x, y));
 				c = n.evaluate(col);
 				
 				/**
 				 * m = y2 - y1 / x2 -x1
 				 * m = - dimensions[1] / - dimensions [0]	
 				 */
-				// f(y,newPic) < x // queer line	
+				// f(y,newPic) < x // queer line
 				if(true) {
-						newPic.setPixel(y, x, c);
+					newPic.setPixel(x, y, c);
 					if(verbose) {
 						System.out.println(" change ");
 					}
 					continue;
 				} else {
-					newPic.setPixel(y, x, col.r, col.g, col.b);
+					newPic.setPixel(x, y, col.r, col.g, col.b);
 					if(verbose) {
 						System.out.println(" keep ----- ");
 					}
@@ -120,7 +120,7 @@ public class Main {
 		}
 	}
 	
-	public static void printOutputToFile() {	
+	public static void printOutputToFile() {
 		try {
 			File myObj = new File("output.txt");
 			

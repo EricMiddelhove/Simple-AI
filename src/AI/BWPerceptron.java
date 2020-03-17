@@ -11,6 +11,10 @@ package AI;
 
 public class BWPerceptron extends AbstractPerceptron {
 	
+	public BWPerceptron(String id) {
+		super(id);
+	}
+	
 	int power = 300; // Describes all inputs added; Bigger than thsi value = white else black
 	int variety = 7; // Describes difference between average input and actual input
 	
