@@ -133,14 +133,18 @@ public class Network {
 	/**
 	 * @param folder save folder
 	 */
-	public void saveWeights(File folder) {
+	public void saveWeights(File folder, AbstractPerceptron[] perceptrons) {
 		ensureFolder(folder);
 		
+		for(AbstractPerceptron p: perceptrons){
+			p.saveWeights(folder);
+		}
+		/**
 		blueP.saveWeights(folder);
 		greenP.saveWeights(folder);
 		redP.saveWeights(folder);
 		yellowP.saveWeights(folder);
-		whiteP.saveWeights(folder);
+		whiteP.saveWeights(folder);**/
 	}
 	
 	private class Status {
