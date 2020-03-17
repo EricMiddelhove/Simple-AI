@@ -66,7 +66,7 @@ public class Picture {
 		rgb = (rgb << 8) | g;
 		rgb = (rgb << 8) | b;
 		
-		img.setRGB(x, y, rgb);
+			img.setRGB(x, y, rgb);
 	}
 	
 	/**

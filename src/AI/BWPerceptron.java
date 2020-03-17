@@ -54,9 +54,10 @@ public class BWPerceptron extends AbstractPerceptron {
 			// getting power level & adjusting it
 			power += (sum - power) * LEARNING_RATE;
 			
-			System.out.println("Power: " + power);
-			System.out.println("Variety" + variety);
-			
+			if(Main.verbose) {
+				System.out.println("Power: " + power);
+				System.out.println("Variety" + variety);
+			}
 		}
 	}
 	

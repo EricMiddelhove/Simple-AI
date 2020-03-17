@@ -1,4 +1,4 @@
-/**
+	/**
  * 
  */
 package AI;
@@ -27,6 +27,7 @@ public class Network {
 	private Perceptron blueP = new Perceptron();
 	private Perceptron yellowP = new Perceptron();
 	private BWPerceptron whiteP = new BWPerceptron();
+	private BWPerceptron blackP = new BWPerceptron();
 
 	/**
 	 * initializing neural network and trains it with picture preset datas
@@ -47,10 +48,11 @@ public class Network {
 
 		System.out.println("training white perceptron");
 		whiteP.trainFromPicture("src/Training Data/WHITE.jpeg", "src/Training Data/NOTWHITE.jpg");
+		
+		System.out.println("training black perceptron");
+		blackP.trainFromPicture("src/Training Data/NOTWHITE.jpg","src/Training Data/WHITE.jpeg");
 
 	}
-
-	
 	
 	/**
 	 * evaluates a given Color of its main component (red green blue)
@@ -66,6 +68,10 @@ public class Network {
 
 			return RGBColor.WHITE;
 
+		}else if(blackP.guess(pixelValue.getColorData()) == 1) {
+			
+			return RGBColor.BLACK;
+			
 		}
 
 		// only if not black or white
@@ -93,7 +99,7 @@ public class Network {
 		Status yellow = new Status(RGBColor.YELLOW, val);
 
 		// saving all guessing status data into an array so we can sort it
-		Status[] guesses = { red, green, blue, yellow };
+		Status[] guesses = {red, green, blue, yellow};
 
 		// sorting it by value, bigges first, simple bubblesort
 		for (int j = 0; j < guesses.length; j++) {

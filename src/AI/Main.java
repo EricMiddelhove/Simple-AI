@@ -23,7 +23,7 @@ public class Main {
 	static Picture notRed = new Picture("src/Training Data/NOTRED.jpg");
 	
 	// analyzing data
-	static Picture picture = new Picture("src/Source img Data/th-4.jpeg");
+	static Picture picture = new Picture("src/Source img Data/th-1.jpeg");
 	
 	// Output data | Array same size as Picture in px
 	static boolean[][] picInBool = new boolean[picture.getDimensions()[0] + 1][picture.getDimensions()[1] + 1];
@@ -57,7 +57,7 @@ public class Main {
 				
 				/**
 				 * m = y2 - y1 / x2 -x1
-				 * m = - dimensions[1] / - dimensions [0]
+				 * m = - dimensions[1] / - dimensions [0]	
 				 */
 				// f(y,newPic) < x // queer line	
 				if(true) {
