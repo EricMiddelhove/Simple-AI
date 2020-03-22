@@ -20,7 +20,6 @@ public class Color {
 	}
 	
 	/**
-	 * 
 	 * @param d array in format {r,g,b}
 	 */
 	public Color(int[] d) {
@@ -32,5 +31,18 @@ public class Color {
 	public int[] getColorData() {
 		int[] a = {r, g, b};
 		return a;
+	}
+	
+	@Override
+	public String toString() {
+		return new StringBuilder(super.toString())
+				.append(" [r=")
+				.append(r)
+				.append(",g=")
+				.append(g)
+				.append(",b=")
+				.append(b)
+				.append("]")
+				.toString();
 	}
 }

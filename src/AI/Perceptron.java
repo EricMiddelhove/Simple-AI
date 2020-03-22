@@ -1,8 +1,8 @@
 package AI;
 
-import PicSerialsization.Picture;
 import dataModels.RGBColor;
 import dataModels.Weights;
+import pictureSerialization.Picture;
 
 /**
  * @author ericmiddelhove
