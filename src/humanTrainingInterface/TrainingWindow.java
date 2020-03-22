@@ -13,9 +13,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 import AI.Network;
-import PicSerialsization.Picture;
 import dataModels.Color;
 import dataModels.RGBColor;
+import pictureSerialization.Picture;
 
 /**
  * @author ericmiddelhove

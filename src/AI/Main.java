@@ -4,10 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import PicSerialsization.Picture;
 import dataModels.Color;
 import dataModels.RGBColor;
 import humanTrainingInterface.TrainingWindow;
+import pictureSerialization.Picture;
 
 /**
  * @author ericmiddelhove

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package PicSerialsization;
+package pictureSerialization;
 
 import java.awt.image.BufferedImage;
 import java.io.File;

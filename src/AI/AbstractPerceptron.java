@@ -10,9 +10,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
-import PicSerialsization.Picture;
+import dataModels.Color;
 import dataModels.RGBColor;
 import dataModels.Weights;
+import pictureSerialization.Picture;
 import txtSerialization.ColorData;
 
 /**
@@ -123,23 +124,23 @@ public abstract class AbstractPerceptron {
 	}
 	
 	/**
-	 * Trains the perceptron with a txt file where each line is a training data 
+	 * Trains the perceptron with a txt file where each line is a training data
 	 * Each line must be formattetd like this: <b>rgb(int,int,int)<b>
-	 * 
 	 * @param truePath path to txt file
 	 */
 	public void trainFromTxtFile(String truePath, String falsePath) {
-		ColorData trueData = new ColorData(truePath);
-		ColorData falseData = new ColorData(falsePath);
+		Color[] trueData = new ColorData(truePath).getColors();
+		Color[] falseData = new ColorData(falsePath).getColors();
 		
-		for(int i = 0; i < trueData.colors.length ||i < falseData.colors.length; i++) {
-			
-			if(i < trueData.colors.length) train(this.guess(trueData.colors[i].getColorData()), 1);
-			if(i < falseData.colors.length) train(this.guess(falseData.colors[i].getColorData()), 1);
-
+		for(int i = 0; (i < trueData.length) || (i < falseData.length); i++) {
+			if(i < trueData.length) {
+				train(this.guess(trueData[i].getColorData()), 1);
+			}
+			if(i < falseData.length) {
+				train(this.guess(falseData[i].getColorData()), 1);
+			}
 		}
 	}
-
 	
 	private void ensureId() {
 		if(id == null) {
