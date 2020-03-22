@@ -1,7 +1,7 @@
 /**
  * 
  */
-package AI;
+package dataModels;
 
 /**
  * @author ericmiddelhove
@@ -16,8 +16,9 @@ public enum RGBColor {
 	BLUE(0, 0, 255),
 	YELLOW(255, 255, 0),
 	CYAN(0, 255, 255),
-	MAGENTA(255, 0, 255),
-	WHITE(255);
+	PURPLE(255, 0, 255),
+	WHITE(255),
+	ORANGE(255,140,0);
 	
 	private final double r;
 	private final double g;

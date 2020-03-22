@@ -1,4 +1,4 @@
-package PicSerialsization;
+package dataModels;
 
 /**
  * @author ericmiddelhove
@@ -19,6 +19,10 @@ public class Color {
 		b = f;
 	}
 	
+	/**
+	 * 
+	 * @param d array in format {r,g,b}
+	 */
 	public Color(int[] d) {
 		r = d[0];
 		g = d[1];

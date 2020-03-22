@@ -1,6 +1,8 @@
 package AI;
 
 import PicSerialsization.Picture;
+import dataModels.RGBColor;
+import dataModels.Weights;
 
 /**
  * @author ericmiddelhove
@@ -236,5 +238,4 @@ public class Perceptron extends AbstractPerceptron {
 			}
 		}
 	}
-	
 }

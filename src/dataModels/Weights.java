@@ -1,4 +1,4 @@
-package AI;
+package dataModels;
 
 import java.io.Serializable;
 /**

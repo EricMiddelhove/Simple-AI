@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import PicSerialsization.Color;
 import PicSerialsization.Picture;
+import dataModels.Color;
+import dataModels.RGBColor;
+import humanTrainingInterface.TrainingWindow;
 
 /**
  * @author ericmiddelhove
@@ -21,7 +23,7 @@ public class Main {
 	static Picture notRed = new Picture("src/Training Data/NOTRED.jpg");
 	
 	// analyzing data
-	static Picture picture = new Picture("src/Source img Data/th-1.jpeg");
+	static Picture picture = new Picture("src/Source img Data/ironman.jpeg");
 	
 	// Output data | Array same size as Picture in px
 	static boolean[][] picInBool = new boolean[picture.getDimensions()[0] + 1][picture.getDimensions()[1] + 1];
@@ -30,54 +32,9 @@ public class Main {
 	static boolean verbose = false;
 	
 	public static void main(String[] args) {
-		Network n = new Network();
-		// simple
-		if(!n.loadWeights(n.FOLDER)) {
-			System.err.println("could not load weights because there is no data");
-			// halt execution because weights are uninitialized
-			// System.exit(1);
-		}
-		
-		RGBColor c;
-		
-		int[] dimensions = picture.getDimensions();
-		
-		Picture newPic = new Picture(dimensions[0], dimensions[1]);
-		
-		System.out.println("Printing new image ...");
-		
-		for(int y = 0; y < dimensions[1]; y++) {
-			
-			for(int x = 0; x < dimensions[0]; x++) {
-				
-				Color col = new Color(picture.getRGBOf(x, y));
-				c = n.evaluate(col);
-				
-				/**
-				 * m = y2 - y1 / x2 -x1
-				 * m = - dimensions[1] / - dimensions [0]	
-				 */
-				// f(y,newPic) < x // queer line
-				if(true) {
-					newPic.setPixel(x, y, c);
-					if(verbose) {
-						System.out.println(" change ");
-					}
-					continue;
-				} else {
-					newPic.setPixel(x, y, col.r, col.g, col.b);
-					if(verbose) {
-						System.out.println(" keep ----- ");
-					}
-					
-				}
-				
-			}
-			
-		}
-		newPic.saveImage();
-		
-		// simple
+		TrainingWindow w = new TrainingWindow(new Color(0,0,0));
+		//doThisPictureChangingStuff(new Network());
+
 	}
 	
 	/**
@@ -117,7 +74,7 @@ public class Main {
 		}
 	}
 	
-	public static void printOutputToFile() {
+	public static void printOutputArrayToFile() {
 		try {
 			File myObj = new File("output.txt");
 			
@@ -152,4 +109,47 @@ public class Main {
 		}
 	}
 	
+	public static void doThisPictureChangingStuff(Network n) {
+		RGBColor c;
+		
+		int[] dimensions = picture.getDimensions();
+		
+		Picture newPic = new Picture(dimensions[0], dimensions[1]);
+		
+		System.out.println("Printing new image ...");
+		
+		for(int y = 0; y < dimensions[1]; y++) {
+			
+			for(int x = 0; x < dimensions[0]; x++) {
+				
+				Color col = new Color(picture.getRGBOf(x, y));
+				c = n.evaluateHard(col)[0];
+				
+				/**
+				 * m = y2 - y1 / x2 -x1
+				 * m = - dimensions[1] / - dimensions [0]	
+				 */
+				// f(y,newPic) < x // queer line
+				if(true) {
+					newPic.setPixel(x, y, c);
+					if(verbose) {
+						System.out.println(" change ");
+					}
+					continue;
+				} else {
+					newPic.setPixel(x, y, col.r, col.g, col.b);
+					if(verbose) {
+						System.out.println(" keep ----- ");
+					}
+					
+				}
+				
+			}
+			
+		}
+		newPic.saveImage();
+		
+		// simple
+	}
+
 }

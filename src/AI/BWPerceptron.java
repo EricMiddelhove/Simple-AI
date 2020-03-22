@@ -3,6 +3,8 @@
  */
 package AI;
 
+import dataModels.RGBColor;
+
 /**
  * @author ericmiddelhove
  *         license = CC-BY-SA-NC

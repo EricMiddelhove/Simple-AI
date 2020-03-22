@@ -11,6 +11,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import PicSerialsization.Picture;
+import dataModels.RGBColor;
+import dataModels.Weights;
+import txtSerialization.ColorData;
 
 /**
  * @author ericmiddelhove
@@ -34,7 +37,7 @@ public abstract class AbstractPerceptron {
 		return id;
 	}
 	
-	public static double LEARNING_RATE = 0.2;
+	public static double LEARNING_RATE = 0.002;
 	
 	/**
 	 * Ask Perceptron if it is the coller it is trained for only use after training
@@ -63,6 +66,14 @@ public abstract class AbstractPerceptron {
 	public abstract double guessAnalog(int[] js, RGBColor color);
 	
 	public abstract void train(int guess, int target);
+	
+	public void train(int guess, int target, int[] ins) {
+		inputs[0] = ins[0];
+		inputs[1] = ins[1];
+		inputs[2] = ins[2];
+		
+		train(guess, target);
+	}
 	
 	/**
 	 * Trains the perceptron with a jpg where each pixel is a training data
@@ -110,6 +121,25 @@ public abstract class AbstractPerceptron {
 		}
 		
 	}
+	
+	/**
+	 * Trains the perceptron with a txt file where each line is a training data 
+	 * Each line must be formattetd like this: <b>rgb(int,int,int)<b>
+	 * 
+	 * @param truePath path to txt file
+	 */
+	public void trainFromTxtFile(String truePath, String falsePath) {
+		ColorData trueData = new ColorData(truePath);
+		ColorData falseData = new ColorData(falsePath);
+		
+		for(int i = 0; i < trueData.colors.length ||i < falseData.colors.length; i++) {
+			
+			if(i < trueData.colors.length) train(this.guess(trueData.colors[i].getColorData()), 1);
+			if(i < falseData.colors.length) train(this.guess(falseData.colors[i].getColorData()), 1);
+
+		}
+	}
+
 	
 	private void ensureId() {
 		if(id == null) {

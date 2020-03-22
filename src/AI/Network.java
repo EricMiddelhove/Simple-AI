@@ -1,57 +1,68 @@
-	/**
- * 
- */
 package AI;
 
 import java.io.File;
+import java.util.ArrayList;
 
-import PicSerialsization.Color;
+import dataModels.Color;
+import dataModels.RGBColor;
 
 /**
  * @author ericmiddelhove
  *         license = CC-BY-SA-NC
  *         http://creativecommons.org/licenses/by-nc-sa-/4.0/
  */
-
 public class Network {
 	
 	public static final File FOLDER = new File("weights");
 
 	
-	private Perceptron redP = new Perceptron("redP");
-	private Perceptron greenP = new Perceptron("greenP");
-	private Perceptron blueP = new Perceptron("blueP");
-	private Perceptron yellowP = new Perceptron("yellowP");
-	private BWPerceptron whiteP = new BWPerceptron("whiteP");
-	private BWPerceptron blackP = new BWPerceptron("blackP");
+	public Perceptron redP = new Perceptron("redP");
+	public Perceptron orangeP = new Perceptron("orangeP");
+	public Perceptron yellowP = new Perceptron("yellowP");
+	public Perceptron greenP = new Perceptron("greenP");
+	public Perceptron blueP = new Perceptron("blueP");
+	public Perceptron purpleP = new Perceptron("purpleP");
+	
+	public BWPerceptron whiteP = new BWPerceptron("whiteP");
+	public BWPerceptron blackP = new BWPerceptron("blackP");
 
+	private boolean shouldSave = true;
+	private boolean shouldLoad = true;
 
 	/**
 	 * initializing neural network and trains it with picture preset datas
 	 */
 	public Network() {
-		
-		System.out.println("training red perceptron");
-		redP.trainFromPicture("src/Training Data/RED.jpg", "src/Training Data/NOTRED.jpg");
-		
-		System.out.println("training green perceptron");
-		greenP.trainFromPicture("src/Training Data/GREEN.jpg", "src/Training Data/NOTGREEN.jpg");
-		
-		System.out.println("training blue perceptron");
-		blueP.trainFromPicture("src/Training Data/BLUE.jpg", "src/Training Data/NOTBLUE.jpg");
-		
-		System.out.println("training yellow perceptron");
-		yellowP.trainFromPicture("src/Training Data/YELLOW.jpeg", "src/Training Data/NOTYELLOW.jpg");
-		
-		System.out.println("training white perceptron");
-		whiteP.trainFromPicture("src/Training Data/WHITE.jpeg", "src/Training Data/NOTWHITE.jpg");
-		
-		System.out.println("training black perceptron");
-		blackP.trainFromPicture("src/Training Data/NOTWHITE.jpg","src/Training Data/WHITE.jpeg");
+		if(!shouldLoad) { 
+			/**
+			System.out.println("Have not loaded weights");
+			// halt execution because weights are uninitialized
+			// System.exit(1);
+			System.out.println("training red perceptron");
+			redP.trainFromPicture("src/Training Data/RED.jpg", "src/Training Data/NOTRED.jpg");
+			
+			System.out.println("training green perceptron");
+			greenP.trainFromPicture("src/Training Data/GREEN.jpg", "src/Training Data/NOTGREEN.jpg");
+			
+			System.out.println("training blue perceptron");
+			blueP.trainFromTxtFile("src/Training Data/allBlue.txt", "src/Training Data/emptyTxt.txt");
+			blueP.trainFromPicture("src/Training Data/BLUE.jpg", "src/Training Data/NOTBLUE.jpg");
+			
+			System.out.println("training yellow perceptron");
+			yellowP.trainFromPicture("src/Training Data/YELLOW.jpeg", "src/Training Data/NOTYELLOW.jpg");
+			
+			System.out.println("training white perceptron");
+			whiteP.trainFromPicture("src/Training Data/WHITE.jpeg", "src/Training Data/NOTWHITE.jpg");
+			
+			System.out.println("training black perceptron");
+			blackP.trainFromPicture("src/Training Data/NOTWHITE.jpg","src/Training Data/WHITE.jpeg");
+			*/
+		}else {
+			loadWeights(FOLDER);
+			System.out.println("Successfully loaded weights");
+		}
 
-
-		saveWeights(FOLDER, new AbstractPerceptron[] {redP,greenP,blueP,yellowP,whiteP,blackP});
-
+		if(shouldSave) saveWeights(FOLDER, new AbstractPerceptron[] {redP,greenP,blueP,yellowP,whiteP,blackP,orangeP,purpleP});
 
 	}
 	
@@ -78,6 +89,7 @@ public class Network {
 		
 		// Color guessing
 		float redStat = (float) redP.guessAnalog(pixelValue.getColorData(), RGBColor.RED);
+		float orangeStat = (float) orangeP.guessAnalog(pixelValue.getColorData(), RGBColor.ORANGE);
 		float greenStat = (float) greenP.guessAnalog(pixelValue.getColorData(), RGBColor.GREEN);
 		float blueStat = (float) blueP.guessAnalog(pixelValue.getColorData(), RGBColor.BLUE);
 		float yellowStat = (float) yellowP.guessAnalog(pixelValue.getColorData(), RGBColor.YELLOW);
@@ -114,8 +126,40 @@ public class Network {
 			}
 		}
 		
+		if(guesses[0].value < 0.5) {
+			System.out.println("Unsure");
+		}
+		
 		// Returning color of biggest element
 		return guesses[0].color;
+	}
+	
+	/**
+	 * Guesses the color returns colors which it thinks could be
+	 * 
+	 * @param pixelValue
+	 * @return
+	 */
+	public RGBColor[] evaluateHard(Color pixelValue) {
+		
+		ArrayList<RGBColor> out = new ArrayList<RGBColor>();
+		
+		if(redP.guess(pixelValue.getColorData()) == 1) {
+			out.add(RGBColor.RED);
+		}else if(orangeP.guess(pixelValue.getColorData()) == 1) {
+			out.add(RGBColor.ORANGE);
+		}else if(yellowP.guess(pixelValue.getColorData()) == 1) {
+			out.add(RGBColor.YELLOW);
+		}else if(greenP.guess(pixelValue.getColorData()) == 1) {
+			out.add(RGBColor.GREEN);
+		}else if(blueP.guess(pixelValue.getColorData()) == 1) {
+			out.add(RGBColor.BLUE);
+		}else if(purpleP.guess(pixelValue.getColorData()) == 1) {
+			out.add(RGBColor.PURPLE);
+		}
+		
+		return out.toArray(new RGBColor[out.size()]);
+		
 	}
 	
 	/**
@@ -141,6 +185,9 @@ public class Network {
 		result &= redP.loadWeights(folder);
 		result &= whiteP.loadWeights(folder);
 		result &= yellowP.loadWeights(folder);
+		result &= orangeP.loadWeights(folder);
+		result &= purpleP.loadWeights(folder);
+
 		
 		return result;
 	}
@@ -160,6 +207,39 @@ public class Network {
 		redP.saveWeights(folder);
 		yellowP.saveWeights(folder);
 		whiteP.saveWeights(folder);**/
+	}
+	
+	/**
+	 * 
+	 */
+	public void trainAll(RGBColor correctAnswer, int[] ins) {
+		
+		int redStat = -1, orangeStat = -1, yellowStat = -1, greenStat = -1, blueStat = -1, purpleStat = -1 ;
+		
+		
+		switch(correctAnswer) {
+			case RED: redStat = 1;
+			case ORANGE: orangeStat = 1;
+			case YELLOW: yellowStat = 1;
+			case GREEN: greenStat = 1;
+			case BLUE: blueStat = 1;
+			case PURPLE: purpleStat = 1;
+			default: break;
+		}
+		
+		
+		redP.train(redP.guess(ins), redStat);
+		orangeP.train(orangeP.guess(ins), orangeStat);
+		yellowP.train(yellowP.guess(ins), yellowStat);
+		greenP.train(greenP.guess(ins), greenStat);
+		blueP.train(blueP.guess(ins), blueStat);
+		purpleP.train(purpleP.guess(ins), purpleStat);
+		
+	}
+	public void saveWeights() {
+		saveWeights(FOLDER, new AbstractPerceptron[] {redP,greenP,blueP,yellowP,whiteP,blackP,orangeP,purpleP});
+		System.out.println("Saved weights");
+
 	}
 	
 	private class Status {

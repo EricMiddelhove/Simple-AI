@@ -9,7 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import AI.RGBColor;
+import dataModels.Color;
+import dataModels.RGBColor;
 
 /**
  * @author ericmiddelhove
@@ -18,6 +19,8 @@ import AI.RGBColor;
 public class Picture {
 	
 	private BufferedImage img = null;
+	private static int width;
+	private static int height;
 	
 	/**
 	 * Constructs new jpg Picture
@@ -30,14 +33,25 @@ public class Picture {
 		try {
 			f = new File(path);
 			img = ImageIO.read(f);
+			width = img.getWidth();
+			height = img.getHeight();
 		} catch(IOException e) {
 			System.out.println(e);
 		}
 		
 	}
 	
+	/**
+	 * creates emptiy picture
+	 * 
+	 * @param w_ width
+	 * @param h_ height
+	 */
 	public Picture(int w_, int h_) {
 		// Creates new image wit RGB Range
+		width = w_;
+		height = h_;
+				
 		img = new BufferedImage(w_, h_, BufferedImage.TYPE_INT_RGB);
 	}
 	
@@ -67,6 +81,16 @@ public class Picture {
 		rgb = (rgb << 8) | b;
 		
 			img.setRGB(x, y, rgb);
+	}
+	
+	/**
+	 * Sets pixel for specified coordinate
+	 * @param x coordinate
+	 * @param y coordinate
+	 * @param c Color of the pixel
+	 */
+	public void setPixel(int x, int y, Color c) {
+		setPixel(x,y,c.getColorData()[0],c.getColorData()[1], c.getColorData()[2]);
 	}
 	
 	/**
@@ -103,6 +127,18 @@ public class Picture {
 		
 	}
 	
+	public void setAllPixelsTo(Color c) {
+		
+		for(int i = 0; i < height; i++) {
+			for(int j = 0; j < width; j++) {
+				
+				setPixel(j,i,c);
+				
+			}
+		}
+		
+	}
+	
 	public void saveImage() {
 		File outputfile = new File("image.jpg");
 		try {
@@ -115,4 +151,7 @@ public class Picture {
 		System.out.println("Saved Image successfully");
 	}
 	
+	public BufferedImage getBufferedImage() {
+		return img;
+	}
 }
